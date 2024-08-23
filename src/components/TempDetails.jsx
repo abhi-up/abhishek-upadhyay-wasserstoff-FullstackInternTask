@@ -74,7 +74,7 @@ const TempDetails = ({ data, units }) => {
                     {verticalDetails.map(({ id, Icon, title, value }) => (
                         <div
                             key={id}
-                            className="flex items-center text-lg md:text-xl"
+                            className="flex items-center text-sm md:text-xl"
                         >
                             <Icon className="text-gray-300 mr-2" size={24} />
                             <p>
@@ -95,7 +95,7 @@ const TempDetails = ({ data, units }) => {
                 {horizontalDetails.map(({ id, Icon, title, value }) => (
                     <div
                         key={id}
-                        className="flex items-center justify-center text-lg md:text-xl"
+                        className="flex items-center justify-center text-sm md:text-xl"
                     >
                         <Icon className="text-gray-300 mr-2" size={24} />
                         <p>
