@@ -5,7 +5,7 @@ import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md"
 const TempDetails = ({ data, units }) => {
     const { main, weather, wind } = data
 
-    // Convert temperature from deg Celsius to deg Fahrenheit
+    // Convert temperature from Celsius to Fahrenheit if needed
     const convertTemperature = (temp) => {
         return units === "metric" ? temp : temp * 1.8 + 32
     }
@@ -41,55 +41,66 @@ const TempDetails = ({ data, units }) => {
     ]
 
     return (
-        <div className="max-w-full px-4 bg-gray-800 text-gray-200">
-            <div className="flex items-center justify-center py-6 text-lg md:text-xl capitalize">
-                <p>{weather[0].description}</p>
+        <div className="max-w-full px-4 py-6 bg-gray-800 text-gray-200">
+            {/* Weather Description */}
+            <div className="text-center">
+                <p className="text-xl md:text-2xl capitalize font-medium">
+                    {weather[0].description}
+                </p>
             </div>
 
-            <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-                <div className="flex items-center justify-between w-full">
+            {/* Main Temperature and Details */}
+            <div className="mt-6 flex flex-col md:flex-row items-center justify-between">
+                {/* Weather Icon */}
+                <div className="flex-shrink-0">
                     <img
-                        src={`http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
+                        src={`http://openweathermap.org/img/wn/${weather[0].icon}@4x.png`}
                         alt={weather[0].description}
-                        className="w-28 md:w-32 "
+                        className="w-32 h-32 md:w-40 md:h-40 "
                     />
+                </div>
 
-                    <p className="text-4xl md:text-5xl font-semibold">
-                        {`${convertTemperature(main.temp).toFixed(1)} °${
+                {/* Temperature Display */}
+                <div className="mt-4 md:mt-0 md:mx-8">
+                    <p className="text-5xl md:text-6xl font-bold">
+                        {`${convertTemperature(main.temp).toFixed(1)}°${
                             units === "metric" ? "C" : "F"
                         }`}
                     </p>
-                    <div className="flex flex-col space-y-3 items-start">
-                        {verticalDetails.map(({ id, Icon, title, value }) => (
-                            <div
-                                key={id}
-                                className="flex font-light text-sm md:text-sm items-center"
-                            >
-                                <Icon
-                                    size={20}
-                                    className="mr-1 text-gray-300"
-                                />
-                                <p className="font-light ml-1">
-                                    {`${title}:`}
-                                    <span className="font-medium ml-1">
-                                        {`${convertTemperature(value).toFixed(
-                                            1
-                                        )}°${units === "metric" ? "C" : "F"}`}
-                                    </span>
-                                </p>
-                            </div>
-                        ))}
-                    </div>
+                </div>
+
+                {/* High and Low Temperatures */}
+                <div className="mt-4 md:mt-0 flex flex-col space-y-4">
+                    {verticalDetails.map(({ id, Icon, title, value }) => (
+                        <div
+                            key={id}
+                            className="flex items-center text-lg md:text-xl"
+                        >
+                            <Icon className="text-gray-300 mr-2" size={24} />
+                            <p>
+                                {title}:
+                                <span className="font-semibold ml-1">
+                                    {`${convertTemperature(value).toFixed(1)}°${
+                                        units === "metric" ? "C" : "F"
+                                    }`}
+                                </span>
+                            </p>
+                        </div>
+                    ))}
                 </div>
             </div>
 
-            <div className="flex flex-row flex-wrap items-center justify-center space-x-10 text-sm md:text-sm py-3">
+            {/* Additional Details */}
+            <div className="mt-6 grid grid-cols-2 gap-4 md:flex md:justify-center md:space-x-12">
                 {horizontalDetails.map(({ id, Icon, title, value }) => (
-                    <div key={id} className="flex items-center">
-                        <Icon size={24} className="text-gray-300" />
-                        <p className="font-light ml-1">
-                            {`${title}:`}
-                            <span className="font-medium ml-1">{value}</span>
+                    <div
+                        key={id}
+                        className="flex items-center justify-center text-lg md:text-xl"
+                    >
+                        <Icon className="text-gray-300 mr-2" size={24} />
+                        <p>
+                            {title}:
+                            <span className="font-semibold ml-1">{value}</span>
                         </p>
                     </div>
                 ))}
